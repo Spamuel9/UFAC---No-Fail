@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>No Fail | Couch to 5K</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <h1>No Fail</h1>
+        <p>Adaptive Couch to 5K training built around your fitness test date.</p>
+      </header>
+
+      <section id="authSection" class="card"></section>
+
+      <section id="dashboard" class="hidden">
+        <div class="top-row">
+          <h2 id="welcomeMessage"></h2>
+          <button id="logoutBtn" class="button secondary">Logout</button>
+        </div>
+
+        <div id="celebrationBanner" class="banner hidden"></div>
+
+        <article class="card" id="mainPanel"></article>
+
+        <article class="card hidden" id="planCreatorPanel"></article>
+
+        <article class="card hidden" id="archivePanel">
+          <h3>Archived Plans</h3>
+          <div id="archiveList"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
