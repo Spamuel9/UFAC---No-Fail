@@ -335,4 +335,3 @@ logoutBtn.addEventListener("click", () => {
   }
   render();
 })();
-

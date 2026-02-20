@@ -4,11 +4,15 @@ import jwt from "jsonwebtoken";
 import { Low } from "lowdb";
 import { JSONFile } from "lowdb/node";
 import { nanoid } from "nanoid";
+import path from "node:path";
+import { mkdir } from "node:fs/promises";
 
 const app = express();
 const PORT = Number(process.env.PORT || 8080);
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-change-me";
-const DB_PATH = process.env.DB_PATH || "./data/db.json";
+const DB_PATH = process.env.DB_PATH || path.join(process.env.HOME || process.cwd(), "data", "db.json");
+
+await mkdir(path.dirname(DB_PATH), { recursive: true });
 
 const adapter = new JSONFile(DB_PATH);
 const db = new Low(adapter, { users: [] });
@@ -146,4 +150,5 @@ app.get("*", (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`No Fail listening on ${PORT}`);
+  console.log(`Using DB_PATH=${DB_PATH}`);
 });

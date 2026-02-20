@@ -12,5 +12,8 @@
     "jsonwebtoken": "^9.0.2",
     "lowdb": "^7.0.1",
     "nanoid": "^5.1.5"
+  },
+  "engines": {
+    "node": ">=20 <23"
   }
 }

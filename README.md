@@ -65,5 +65,32 @@ cf push
 ## Security and persistence notes
 
 - Client browser now stores only an auth token, not user passwords.
-- User records and plans are stored server-side in `data/db.json` for this phase.
+- User records and plans are stored server-side in `DB_PATH` (defaults to `$HOME/data/db.json` on cloud.gov) for this phase.
 - For production multi-instance durability, move persistence to a managed database service (e.g., PostgreSQL) and set a strong `JWT_SECRET` environment variable.
+
+## If cloud.gov says “Start unsuccessful”
+
+Run:
+
+```bash
+cf logs no-fail --recent
+```
+
+Common fixes:
+
+- Re-authenticate if your CLI token is stale:
+
+```bash
+cf logout
+cf login -a api.fr.cloud.gov --sso
+cf target -o <YOUR_ORG> -s <YOUR_SPACE>
+```
+
+- Confirm app env and restart:
+
+```bash
+cf set-env no-fail JWT_SECRET <strong-random-secret>
+cf restage no-fail
+```
+
+- Check the startup line in logs for `Using DB_PATH=...` to verify writable storage path.
