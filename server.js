@@ -10,20 +10,16 @@ import { mkdir } from "node:fs/promises";
 const app = express();
 const PORT = Number(process.env.PORT || 8080);
 const JWT_SECRET = process.env.JWT_SECRET || "dev-secret-change-me";
-const DB_PATH =
-  process.env.DB_PATH || path.join(process.env.TMPDIR || "/tmp", "no-fail", "db.json");
+const DB_PATH = process.env.DB_PATH || path.join(process.env.HOME || process.cwd(), "data", "db.json");
 
-async function initializeDb() {
-  await mkdir(path.dirname(DB_PATH), { recursive: true });
-  const adapter = new JSONFile(DB_PATH);
-  const initializedDb = new Low(adapter, { users: [] });
-  await initializedDb.read();
-  initializedDb.data ||= { users: [] };
-  await initializedDb.write();
-  return initializedDb;
-}
+await mkdir(path.dirname(DB_PATH), { recursive: true });
 
-const db = await initializeDb();
+const adapter = new JSONFile(DB_PATH);
+const db = new Low(adapter, { users: [] });
+
+await db.read();
+db.data ||= { users: [] };
+await db.write();
 
 app.use(express.json({ limit: "1mb" }));
 app.use(express.static("."));
@@ -157,10 +153,3 @@ app.listen(PORT, () => {
   console.log(`Using DB_PATH=${DB_PATH}`);
 });
 
-process.on("uncaughtException", (error) => {
-  console.error("Uncaught exception:", error);
-});
-
-process.on("unhandledRejection", (error) => {
-  console.error("Unhandled rejection:", error);
-});

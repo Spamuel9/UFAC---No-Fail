@@ -38,7 +38,7 @@ This app now deploys as a Node.js app (frontend + API) using Cloud Foundry `node
 
 ### Deployment files
 
-- `manifest.yml` (resource sizing, buildpack, start command, health-check, and env vars)
+- `manifest.yml` (resource sizing, buildpack, and start command)
 - `server.js` (Express server for static files + API)
 
 ### CLI deployment
@@ -48,24 +48,6 @@ cf login -a api.fr.cloud.gov --sso
 cf target -o <YOUR_ORG> -s <YOUR_SPACE>
 cf push
 ```
-
-
-### Avoid deprecated `--hostname` flag
-
-Use routes in `manifest.yml` (already configured) and run plain `cf push -f manifest.yml`.
-Do not pass `--hostname` on the CLI.
-
-### Verify you are pushing the fixed Node engine value
-
-Before push, confirm:
-
-```bash
-grep '"node"' package.json
-# should show: "node": "20.x"
-```
-
-If logs still show `engines.node: >=20 <23`, you are pushing an older copy of the repo.
-Run `git pull` (or re-clone) and push again from the updated working tree.
 
 ### cloud.gov web UI override values
 
@@ -83,19 +65,15 @@ Run `git pull` (or re-clone) and push again from the updated working tree.
 ## Security and persistence notes
 
 - Client browser now stores only an auth token, not user passwords.
-- User records and plans are stored server-side in `DB_PATH` (manifest defaults to `/tmp/no-fail/db.json` on cloud.gov) for this phase.
+- User records and plans are stored server-side in `DB_PATH` (defaults to `$HOME/data/db.json` on cloud.gov) for this phase.
 - For production multi-instance durability, move persistence to a managed database service (e.g., PostgreSQL) and set a strong `JWT_SECRET` environment variable.
 
 ## If cloud.gov says “Start unsuccessful”
-
-If staging fails with `improper constraint` for `engines.node`, use a buildpack-friendly value like `20.x` in `package.json` (not compound ranges such as `>=20 <23`).
-
 
 Run:
 
 ```bash
 cf logs no-fail --recent
-cf events no-fail
 ```
 
 Common fixes:
@@ -115,4 +93,5 @@ cf set-env no-fail JWT_SECRET <strong-random-secret>
 cf restage no-fail
 ```
 
-- Check the startup line in logs for `Using DB_PATH=...` to verify writable storage path (should show `/tmp/no-fail/db.json` unless overridden).
+- Check the startup line in logs for `Using DB_PATH=...` to verify writable storage path.
+
