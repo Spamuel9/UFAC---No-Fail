@@ -1,38 +1,45 @@
 # No Fail
 
-No Fail is a lightweight Couch to 5K training web app prototype.
+No Fail is a Couch to 5K training app prototype with backend-authenticated accounts.
 
 ## Current core functionality
 
-- User account creation and login (name, username, password).
+- Server-backed account creation and login (name, username, password).
+- Passwords are hashed on the server (not stored in browser storage).
 - Plan creator that asks for the data needed to build a personalized plan.
 - Training progression tied to the user's fitness test date.
 - Bold countdown display to the test date on the main dashboard.
-- Modernized default dark theme UI for a more polished look and feel.
+- Modernized default dark theme UI.
 - Daily agenda generated from a master plan and shown on the main page.
 - Mark daily task complete.
 - Up to 3 break-day deferrals per week (task moves to next day).
 - Weekly celebration banner when all 4 weekly tasks are completed.
 - Automatic archiving and dashboard reset when test day arrives and training is complete.
 
-## Run locally
+## Local development
 
-Open `index.html` directly in a browser, or serve with:
+Install dependencies:
 
 ```bash
-python3 -m http.server 4173
+npm install
 ```
 
-Then open `http://localhost:4173`.
+Run the app:
+
+```bash
+npm start
+```
+
+Open `http://localhost:8080`.
 
 ## Deploy to cloud.gov
 
-This repository is now configured for static deployment using the Cloud Foundry `staticfile_buildpack`.
+This app now deploys as a Node.js app (frontend + API) using Cloud Foundry `nodejs_buildpack`.
 
-### Files used for deployment
+### Deployment files
 
-- `manifest.yml` (app name, memory, instances, disk quota, buildpack)
-- `Staticfile` (serve repo root, force HTTPS)
+- `manifest.yml` (resource sizing, buildpack, and start command)
+- `server.js` (Express server for static files + API)
 
 ### CLI deployment
 
@@ -42,29 +49,21 @@ cf target -o <YOUR_ORG> -s <YOUR_SPACE>
 cf push
 ```
 
-### cloud.gov web UI values (matching your Overrides screen)
-
-Use these values in **Overrides (Optional)** if you are editing manually:
+### cloud.gov web UI override values
 
 - **Application Name:** `no-fail` (or your preferred unique name)
 - **Number of Instances:** `1`
-- **Memory Quota:** `64 MB`
-- **Disk Quota:** `256 MB`
+- **Memory Quota:** `256 MB`
+- **Disk Quota:** `512 MB`
 - **Stack:** leave default
-- **Custom buildpack:** `staticfile_buildpack`
-- **Docker Image / Docker Username:** leave blank
-- **Route:**
-  - Keep route enabled
-  - **Host:** `no-fail` (or unique hostname)
-  - **Domain:** select your allowed cloud.gov domain
-  - **Path:** blank
-- **Start Command:** blank
+- **Custom buildpack:** `nodejs_buildpack`
+- **Start Command:** `npm start`
 - **Health Check Type:** `port`
-- **Health Check Timeout:** default is fine
+- **Health Check Timeout:** default
+- **Docker fields:** leave blank
 
-After deploy, open the generated route URL.
+## Security and persistence notes
 
-## Current data-storage behavior (important)
-
-User login data and plan data are currently stored in browser `localStorage` on each device/browser profile.
-This is fine for prototype use but is **not** production-grade account storage yet. The next step is adding a backend + database for real accounts.
+- Client browser now stores only an auth token, not user passwords.
+- User records and plans are stored server-side in `data/db.json` for this phase.
+- For production multi-instance durability, move persistence to a managed database service (e.g., PostgreSQL) and set a strong `JWT_SECRET` environment variable.
