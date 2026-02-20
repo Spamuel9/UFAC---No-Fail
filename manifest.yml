@@ -6,7 +6,3 @@ applications:
     buildpacks:
       - nodejs_buildpack
     command: npm start
-    health-check-type: port
-    timeout: 180
-    env:
-      DB_PATH: /tmp/no-fail/db.json
