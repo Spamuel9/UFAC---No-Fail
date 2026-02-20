@@ -38,7 +38,7 @@ This app now deploys as a Node.js app (frontend + API) using Cloud Foundry `node
 
 ### Deployment files
 
-- `manifest.yml` (resource sizing, buildpack, start command, health-check, and env vars)
+- `manifest.yml` (resource sizing, buildpack, and start command)
 - `server.js` (Express server for static files + API)
 
 ### CLI deployment
@@ -65,7 +65,7 @@ cf push
 ## Security and persistence notes
 
 - Client browser now stores only an auth token, not user passwords.
-- User records and plans are stored server-side in `DB_PATH` (manifest defaults to `/tmp/no-fail/db.json` on cloud.gov) for this phase.
+- User records and plans are stored server-side in `DB_PATH` (defaults to `$HOME/data/db.json` on cloud.gov) for this phase.
 - For production multi-instance durability, move persistence to a managed database service (e.g., PostgreSQL) and set a strong `JWT_SECRET` environment variable.
 
 ## If cloud.gov says “Start unsuccessful”
@@ -74,7 +74,6 @@ Run:
 
 ```bash
 cf logs no-fail --recent
-cf events no-fail
 ```
 
 Common fixes:
@@ -94,4 +93,5 @@ cf set-env no-fail JWT_SECRET <strong-random-secret>
 cf restage no-fail
 ```
 
-- Check the startup line in logs for `Using DB_PATH=...` to verify writable storage path (should show `/tmp/no-fail/db.json` unless overridden).
+- Check the startup line in logs for `Using DB_PATH=...` to verify writable storage path.
+
