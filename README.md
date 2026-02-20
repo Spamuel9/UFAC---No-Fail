@@ -94,3 +94,4 @@ cf restage no-fail
 ```
 
 - Check the startup line in logs for `Using DB_PATH=...` to verify writable storage path.
+
