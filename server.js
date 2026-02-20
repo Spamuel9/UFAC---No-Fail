@@ -152,3 +152,4 @@ app.listen(PORT, () => {
   console.log(`No Fail listening on ${PORT}`);
   console.log(`Using DB_PATH=${DB_PATH}`);
 });
+
