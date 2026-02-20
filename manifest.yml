@@ -1,7 +1,8 @@
 applications:
   - name: no-fail
-    memory: 64M
+    memory: 256M
     instances: 1
-    disk_quota: 256M
+    disk_quota: 512M
     buildpacks:
-      - staticfile_buildpack
+      - nodejs_buildpack
+    command: npm start
