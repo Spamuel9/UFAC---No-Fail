@@ -1,0 +1,7 @@
+applications:
+  - name: no-fail
+    memory: 64M
+    instances: 1
+    disk_quota: 256M
+    buildpacks:
+      - staticfile_buildpack
