@@ -1,0 +1,12 @@
+applications:
+  - name: no-fail
+    memory: 256M
+    instances: 1
+    disk_quota: 512M
+    buildpacks:
+      - nodejs_buildpack
+    command: npm start
+    health-check-type: port
+    timeout: 180
+    env:
+      DB_PATH: /tmp/no-fail/db.json

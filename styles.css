@@ -1,0 +1,241 @@
+:root {
+  color-scheme: dark;
+  --bg: #070b14;
+  --bg-accent: #111a2f;
+  --card: rgba(14, 24, 46, 0.78);
+  --card-strong: #132447;
+  --text: #e8eeff;
+  --muted: #a8b6d6;
+  --accent: #6f8cff;
+  --accent-strong: #8ca4ff;
+  --accent-soft: rgba(111, 140, 255, 0.16);
+  --good: #4bd497;
+  --warn: #ffbf4d;
+  --border: rgba(160, 180, 235, 0.24);
+  --shadow: 0 14px 40px rgba(2, 8, 24, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 10% 0%, #1b2d56 0%, transparent 38%),
+    radial-gradient(circle at 100% 0%, #1b2245 0%, transparent 34%),
+    linear-gradient(160deg, var(--bg), var(--bg-accent));
+}
+
+.container {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 2.4rem 1rem 3rem;
+}
+
+.hero {
+  padding: 1.25rem 1.3rem;
+  background: linear-gradient(145deg, rgba(22, 40, 79, 0.9), rgba(16, 30, 58, 0.7));
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.hero h1 {
+  margin: 0;
+  letter-spacing: 0.03em;
+  font-size: clamp(2rem, 5vw, 2.95rem);
+}
+
+.hero p {
+  margin-top: 0.45rem;
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.card {
+  backdrop-filter: blur(10px);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1rem;
+  margin-top: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-top: 0.9rem;
+}
+
+h2,
+h3,
+h4 {
+  margin-top: 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1rem 0;
+}
+
+form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  color: #d7e2fd;
+}
+
+input,
+select,
+button,
+textarea {
+  font: inherit;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  background: rgba(9, 17, 35, 0.9);
+  color: var(--text);
+  border: 1px solid rgba(149, 171, 226, 0.35);
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 3px rgba(126, 149, 255, 0.25);
+}
+
+.button,
+button {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--accent), #5876f3);
+  color: white;
+  font-weight: 650;
+  transition: transform 0.14s, filter 0.2s;
+}
+
+button:hover,
+.button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.button.secondary {
+  background: rgba(16, 31, 58, 0.8);
+  color: #e2ebff;
+  border: 1px solid var(--border);
+}
+
+.inline {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.countdown {
+  font-size: 1.16rem;
+  font-weight: 850;
+  color: #d7e4ff;
+  background: linear-gradient(120deg, rgba(64, 96, 198, 0.3), rgba(42, 58, 121, 0.4));
+  border: 1px solid rgba(159, 181, 255, 0.38);
+  border-radius: 12px;
+  padding: 0.82rem;
+}
+
+.agenda-list {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.7rem;
+}
+
+.agenda-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.68rem;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: rgba(18, 30, 57, 0.66);
+}
+
+.badge {
+  display: inline-block;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.56rem;
+  background: var(--accent-soft);
+  color: #bdd0ff;
+  border: 1px solid rgba(152, 177, 250, 0.25);
+}
+
+.banner {
+  margin-top: 1rem;
+  background: rgba(31, 115, 79, 0.25);
+  border: 1px solid rgba(113, 212, 165, 0.4);
+  color: #b9f5db;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.warning {
+  color: var(--warn);
+  font-weight: 600;
+}
+
+.success {
+  color: var(--good);
+  font-weight: 700;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  .agenda-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .top-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
